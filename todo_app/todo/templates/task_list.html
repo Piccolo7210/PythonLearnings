@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>To-Do List</title>
+</head>
+
+<body>
+    <h1>To-Do List</h1>
+    <a href="{% url 'task_create' %}">Add New Task</a>
+    {% if tasks %}
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for task in tasks %}
+            <tr>
+                <td>{{ task.title }}</td>
+                <td>{{ task.description }}</td>
+                <td>{% if task.completed %}Complete{% else %}Not complete{% endif %}</td>
+                <td>
+                    <a href="{% url 'task_update' task.pk %}">Edit</a> |
+                    <a href="{% url 'task_delete' task.pk %}">Delete</a> |
+                    <a href="{% url 'task_toggle_complete' task.pk %}">Toggle</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>No tasks yet.</p>
+    {% endif %}
+</body>
+
+</html>
